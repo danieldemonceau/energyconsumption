@@ -1,0 +1,14 @@
+node_modules
+*.log
+.nyc_output
+coverage
+flow-typed
+*.DS_Store
+dist
+build
+.idea
+.vscode
+*.md
+package.json
+package-lock.json
+*.sql
