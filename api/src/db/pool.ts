@@ -1,19 +1,13 @@
-const { Pool } = require("pg");
-// const chalk = require("chalk");
-import logger from "../logger";
+import { Pool } from 'pg';
+// import chalk from 'chalk';
+import logger from '../logger';
 
-export const {
-  environment,
-  db_host,
-  db_port,
-  db_name,
-  db_user,
-  db_pass,
-} = require("../config/db.config");
+import { dbConfig } from '../config/db.config';
+const { db_host, db_port, db_name, db_user, db_pass } = dbConfig;
 
 const pool = new Pool({
   host: `${db_host}`,
-  port: `${db_port}`,
+  port: parseInt(`${db_port}`),
   database: `${db_name}`,
   user: `${db_user}`,
   password: `${db_pass}`,

@@ -9,19 +9,21 @@ interface MulterRequest extends Request {
 const postUsages = async (req: MulterRequest, res: Response, next: any) => {
   logger.info(req.originalUrl);
   try {
-    csv2pg(req, /*res, */ next);
-    //   .then((err: any) => {
-    //   console.log("err", err);
-    //   err
-    //     ? res.status(404).json({
-    //         msg: "File uploaded, but no INSERT INTO db",
-    //       })
+    await csv2pg(req, next);
+
+    logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
     res.status(200).json({
       msg: 'File uploaded/import successfully!',
       file: req.file,
     });
     // });
   } catch (err) {
+    logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
+    res.status(400).json({
+      msg: 'File uploaded/import failed!',
+      file: req.file,
+    });
+    logger.error(err);
     logger.error('the other err');
   }
 };

@@ -1,6 +1,6 @@
-const { format } = require('winston');
+import { format } from 'winston';
 const { combine, timestamp } = format;
-const winston = require('winston');
+import winston from 'winston';
 
 const logger = winston.createLogger({
   exitOnError: false,
@@ -14,9 +14,9 @@ const logger = winston.createLogger({
     format.splat()
     // format.json(),
   ),
-  rejectionHandlers: [
-    new winston.transports.File({ filename: 'logs/rejections.log' }),
-  ],
+  // rejectionHandlers: [
+  //   new winston.transports.File({ filename: 'logs/rejections.log' }),
+  // ],
   exceptionHandlers: [
     new winston.transports.File({ filename: 'logs/exceptions.log' }),
   ],
@@ -35,8 +35,12 @@ const transports = {
   }),
   console: new winston.transports.Console({
     level: 'verbose',
-    format: combine(format.colorize(), 
-    format.printf((info: any) => `${info.level} | ${info.timestamp} | ${info.message}`)),
+    format: combine(
+      format.colorize(),
+      format.printf(
+        (info: any) => `${info.level} | ${info.timestamp} | ${info.message}`
+      )
+    ),
   }),
   http: new winston.transports.Http({
     level: 'verbose',

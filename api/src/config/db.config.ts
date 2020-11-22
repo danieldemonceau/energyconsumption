@@ -1,29 +1,25 @@
-// const dotenv = require('dotenv');
-// const dotenv = require("custom-env").env();
-import logger from "../logger";
+import logger from '../logger';
 
-let dotenv: any;
-switch (require("current-git-branch")()) {
-  case "develop":
-    dotenv = require("custom-env").env("dev");
-    dotenv.config();
+let env: string;
+switch (require('current-git-branch')()) {
+  case 'develop':
+    env = 'dev';
     break;
-  case "staging":
-    dotenv = require("custom-env").env("sta");
-    dotenv.config();
+  case 'staging':
+    env = 'sta';
     break;
-  case "master":
-    dotenv = require("custom-env").env("pro");
-    dotenv.config();
+  case 'master':
+    env = 'pro';
     break;
   default:
-    dotenv = require("custom-env").env("");
-    dotenv.config();
-    logger.info(`Default env`);
+    env = '';
 }
-dotenv.config();
+logger.info(`${env} environment`);
+const customEnv = require('custom-env');
+customEnv.env('dev');
+customEnv.config();
 
-module.exports = {
+export const dbConfig = {
   environment: process.env.NODE_ENV,
   db_host: process.env.DB_HOST,
   db_port: process.env.DB_PORT,
@@ -31,5 +27,3 @@ module.exports = {
   db_user: process.env.DB_USER,
   db_pass: process.env.DB_PASS,
 };
-
-export {};

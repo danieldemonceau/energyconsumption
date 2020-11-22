@@ -4,15 +4,14 @@ import validator from 'validator';
 import logger from '../../logger';
 
 const getUsages = async (req: Request, res: Response) => {
-  const limit = req.query['limit'];
-  const offset = req.query['offset'];
+  const limit = req.query['limit'] ?? 20;
+  const offset = req.query['offset'] ?? 0;
   const from =
-    req.query['from'] && String(req.query['from']).replace(/^\'+|\'+$/g, '');
-  const to =
-    req.query['to'] && String(req.query['to']).replace(/^\'+|\'+$/g, '');
+    req.query['from'] && String(req.query['from']).replace(/^'+|'+$/g, '');
+  const to = req.query['to'] && String(req.query['to']).replace(/^'+|'+$/g, '');
 
-  const limitIsInt = validator.isInt(String(limit), { gt: 0 });
-  const offsetIsInt = validator.isInt(String(offset), { gt: 0 });
+  const limitIsInt = validator.isInt(String(limit), { min: 0 });
+  const offsetIsInt = validator.isInt(String(offset), { min: 0 });
   // const fromIsDate = validator.isISO8601(String(from));
   const fromIsDate = String(from).match(
     /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/
@@ -22,12 +21,12 @@ const getUsages = async (req: Request, res: Response) => {
     /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/
   );
 
-  let errorMessage: string = '';
+  let errorMessage = '';
 
   if (limit != null && !limitIsInt) {
-    errorMessage = 'Parameter limit is not a positive integer';
+    errorMessage = 'Parameter limit is not zero or a positive integer';
   } else if (offset != null && !offsetIsInt) {
-    errorMessage = 'Parameter offset is not a positive integer';
+    errorMessage = 'Parameter offset is not zero a positive integer';
   } else if (from != null && from != 'undefined' && !fromIsDate) {
     errorMessage = 'Parameter from is not in YYYY/MM/DD HH24:MI format';
   } else if (to != null && to != 'undefined' && !toIsDate) {
@@ -46,27 +45,19 @@ const getUsages = async (req: Request, res: Response) => {
       },
     });
   } else {
-    pool.query(
+    await pool.query(
       `SELECT u.id, u.date_and_time::TEXT, u.consumption, u.reading_quality
     FROM usage u
+    WHERE 1 = 1
     ${
-      from && to
-        ? "WHERE date_and_time BETWEEN (TO_TIMESTAMP('" +
-          from +
-          "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE AND (TO_TIMESTAMP('" +
-          to +
-          "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE"
-        : ''
-    }
-    ${
-      from && !to
-        ? "WHERE date_and_time >= (TO_TIMESTAMP('" +
+      from
+        ? "AND date_and_time >= (TO_TIMESTAMP('" +
           from +
           "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE"
         : ''
     }
     ${
-      !from && to
+      to
         ? "WHERE date_and_time <= (TO_TIMESTAMP('" +
           to +
           "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE"
@@ -76,10 +67,11 @@ const getUsages = async (req: Request, res: Response) => {
     ${limit ? 'LIMIT ' + limit : ''} ${offset ? 'OFFSET ' + offset : ''}`,
       (error: any, results: any) => {
         if (error) {
-          logger.info(req.method + ' ' + req.originalUrl + ' ' + 'HTTP 400');
-          throw error;
+          logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
+          logger.info(error);
+          res.status(400).json(error);
         }
-        logger.info(req.method + ' ' + req.originalUrl + ' ' + 'HTTP 200');
+        logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
         res.status(200).json(results.rows);
       }
     );
