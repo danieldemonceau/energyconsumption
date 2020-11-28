@@ -46,7 +46,6 @@ describe('GET /usages - return 1 result with limit=1', () => {
 });
 
 afterAll((done) => {
-  console.log('finished');
   done();
 });
 
