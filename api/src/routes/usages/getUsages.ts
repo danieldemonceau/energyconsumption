@@ -6,16 +6,12 @@ import isAPIKeyValid from '../../middleware/isAPIKeyValid';
 
 const getUsages = async (req: Request, res: Response) => {
   const apiKeyClient = String(req.query['apikey']);
-  if (!isAPIKeyValid(apiKeyClient)) {
-    logger.error('API key is not valid');
-    res.status(400).json({ error: 'API key is not valid' });
-  } else {
+  try {
+    await isAPIKeyValid(apiKeyClient)
     const limit = req.query['limit'] ?? 20;
     const offset = req.query['offset'] ?? 0;
-    const from =
-      req.query['from'] && String(req.query['from']).replace(/^'+|'+$/g, '');
-    const to =
-      req.query['to'] && String(req.query['to']).replace(/^'+|'+$/g, '');
+    const from = req.query['from'] && String(req.query['from']).replace(/^'+|'+$/g, '');
+    const to = req.query['to'] && String(req.query['to']).replace(/^'+|'+$/g, '');
 
     const limitIsInt = validator.isInt(String(limit), { min: 0 });
     const offsetIsInt = validator.isInt(String(offset), { min: 0 });
@@ -56,27 +52,23 @@ const getUsages = async (req: Request, res: Response) => {
         `SELECT u.id, u.date_and_time::TEXT, u.consumption, u.reading_quality
     FROM usage u
     WHERE 1 = 1
-    ${
-      from
-        ? "AND date_and_time >= (TO_TIMESTAMP('" +
+    ${from
+          ? "AND date_and_time >= (TO_TIMESTAMP('" +
           from +
           "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE"
-        : ''
-    }
-    ${
-      to
-        ? "WHERE date_and_time <= (TO_TIMESTAMP('" +
+          : ''
+        }
+    ${to
+          ? "WHERE date_and_time <= (TO_TIMESTAMP('" +
           to +
           "', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE"
-        : ''
-    }
+          : ''
+        }
     ORDER BY date_and_time DESC 
     ${limit ? 'LIMIT ' + limit : ''} ${offset ? 'OFFSET ' + offset : ''}`,
         (error: any, results: any) => {
           if (error) {
-            logger.info(
-              req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400'
-            );
+            logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
             logger.info(error);
             res.status(400).json(error);
           }
@@ -85,6 +77,9 @@ const getUsages = async (req: Request, res: Response) => {
         }
       );
     }
+  } catch (error) {
+    logger.error('API key is not valid');
+    res.status(400).json({ error: 'API key is not valid' });
   }
 };
 

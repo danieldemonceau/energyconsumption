@@ -77,7 +77,6 @@
     "src/*.ts",
     "src/**/*.tsx",
     "src/logger/index.js",
-    "src/logger/index.js",
     "tests/pg.ts",
     "src/routes/usages/getUsage.test.js"
   ],

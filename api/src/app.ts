@@ -1,5 +1,6 @@
 import express, { Response } from 'express';
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
+const bodyParser = require('body-parser');
 const app = express();
 import logger from './logger';
 
@@ -14,10 +15,7 @@ import routes from './routes';
 routes(app);
 
 process.on('unhandledRejection', (error, promise) => {
-  logger.error(
-    ` Oh Lord! We forgot to handle a promise rejection here: `,
-    promise
-  );
+  logger.error(` Oh Lord! We forgot to handle a promise rejection here: `, promise);
   logger.error(` The error was: `, error);
 });
 

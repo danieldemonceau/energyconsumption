@@ -1,7 +1,9 @@
 import app from './app';
-const port = 9000;
+import {APP_ENV, APP_PORT} from './config';
 import logger from './logger';
 
 app
-  .listen(port)
-  .on('listening', () => logger.info(`Server running on port ${port}`));
+  .listen(APP_PORT)
+  .on('listening', () => logger.info(`Server running in ${APP_ENV} on port ${APP_PORT}`))
+
+console.log(`Server running in ${APP_ENV} on port ${APP_PORT}`)
