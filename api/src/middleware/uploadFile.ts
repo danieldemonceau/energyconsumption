@@ -1,6 +1,5 @@
-const multer = require('multer');
-// import multer from 'multer';
-// import { Request } from 'express';
+import multer from 'multer';
+import { Request } from 'express';
 
 const csvFilter = (_req: Request, file: any, cb: any) => {
   if (!(file.originalname.endsWith('csv') || file.mimetype.includes('csv'))) {
@@ -14,10 +13,10 @@ const storage = multer.diskStorage({
     cb(null, './reports');
   },
   filename: (_req: any, file: any, cb: any) => {
-    cb(null, file.originalname + '-' + Date.now());
+    cb(null, `${file.originalname}-${Date.now()}`);
   },
 });
 
-const uploadFile = multer({ storage, fileFilter: csvFilter });
+const uploadFile = multer({ dest: 'reports/', storage, fileFilter: csvFilter });
 
 export default uploadFile;

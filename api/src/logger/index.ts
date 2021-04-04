@@ -1,25 +1,23 @@
-import { format } from 'winston';
+import winston, { format } from 'winston';
+
 const { combine, timestamp } = format;
-import winston from 'winston';
 
 const logger = winston.createLogger({
   exitOnError: false,
   format: combine(
-    // format.timestamp({
-    //   format: "YYYY-MM-DD HH:mm:ss",
-    // }),
+    /* format.timestamp({
+         format: "YYYY-MM-DD HH:mm:ss",
+       }), */
     timestamp(),
-    format.printf((i: any) => `${i.timestamp} | ${i.message}`),
+    format.printf((info: any) => `${info.timestamp} | ${info.message}`),
     format.errors({ stack: true }),
-    format.splat()
+    format.splat(),
     // format.json(),
   ),
-  // rejectionHandlers: [
-  //   new winston.transports.File({ filename: 'logs/rejections.log' }),
-  // ],
-  exceptionHandlers: [
-    new winston.transports.File({ filename: 'logs/exceptions.log' }),
-  ],
+  /* rejectionHandlers: [
+       new winston.transports.File({ filename: 'logs/rejections.log' }),
+     ], */
+  exceptionHandlers: [new winston.transports.File({ filename: 'logs/exceptions.log' })],
 });
 
 const transports = {
@@ -37,9 +35,7 @@ const transports = {
     level: 'verbose',
     format: combine(
       format.colorize(),
-      format.printf(
-        (info: any) => `${info.level} | ${info.timestamp} | ${info.message}`
-      )
+      format.printf((info: any) => `${info.level} | ${info.timestamp} | ${info.message}`),
     ),
   }),
   http: new winston.transports.Http({

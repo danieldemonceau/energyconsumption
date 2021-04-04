@@ -2,11 +2,23 @@ module.exports = {
   env: {
     browser: true,
     commonjs: true,
-    es2021: true
+    es2021: true,
   },
-  extends: ['airbnb-base', 'prettier'],
+  extends: [
+    'airbnb-base',
+    'prettier',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   parserOptions: {
-    ecmaVersion: 12
+    ecmaVersion: 12,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
   rules: {
     // 'jsx-quotes': 'single',
@@ -14,6 +26,7 @@ module.exports = {
     'no-empty': 0,
     'no-irregular-whitespace': 0,
     quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+    'multiline-comment-style': ['error', 'bare-block'],
     'max-len': [
       'error',
       {
@@ -24,12 +37,13 @@ module.exports = {
         ignoreUrls: true,
         ignoreStrings: true,
         ignoreTemplateLiterals: true,
-        ignoreRegExpLiterals: true
-      }
+        ignoreRegExpLiterals: true,
+      },
     ],
     'global-require': 0,
-    'comma-dangle': ['error', 'never'],
-    'linebreak-style': ['error', 'unix'],
-    'operator-linebreak': ['error', 'after']
-  }
+    'comma-dangle': ['error', 'always-multiline'],
+    'linebreak-style': ['error', 'windows'],
+    'operator-linebreak': ['error', 'after'],
+    'import/extensions': ['error', 'never'],
+  },
 };

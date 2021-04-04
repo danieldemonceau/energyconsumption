@@ -1,6 +1,6 @@
 import { API_KEY_CLIENT_AUTH } from '../config';
 
-const isAPIKeyValid = (apiKeyToCheck: any) =>
+const isAPIKeyValid = (apiKeyToCheck: unknown): Promise<string> =>
   new Promise((resolve, reject) => {
     switch (apiKeyToCheck) {
       case 'undefined' || '' || null:
@@ -10,7 +10,7 @@ const isAPIKeyValid = (apiKeyToCheck: any) =>
         reject(new Error(`The API key provided is not valid!`));
         break;
       case API_KEY_CLIENT_AUTH:
-        resolve(true);
+        resolve('true');
         break;
       default:
         reject(new Error(`The API key provided is not valid!`));

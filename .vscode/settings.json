@@ -1,5 +1,47 @@
 {
-    "cSpell.words": [
-        "originalname"
-    ]
+  "cSpell.words": [
+    "Demonceau",
+    "Parens",
+    "YUJQS",
+    "apikey",
+    "energyconsumption",
+    "linebreak",
+    "millis",
+    "originalname",
+    "printf"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": false
+  },
+  "eslint.lintTask.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript"
+  ],
+  "eslint.alwaysShowStatus": true,
+  "eslint.workingDirectories": [
+    "./api"
+  ],
+  "eslint.run": "onSave",
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.codeActionsOnSave.mode": "all"
 }

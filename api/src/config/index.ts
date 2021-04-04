@@ -1,65 +1,74 @@
-const gitBranch = require('current-git-branch')();
+import currentGitBranch from 'current-git-branch';
+
+const gitBranch = currentGitBranch();
 
 const os: string = process.platform;
 
-let APP_ENV: string, APP_PORT: number, LOG_LEVEL_CONSOLE: string, DB_HOST: string, DB_PORT: number, DB_NAME: string, DB_USER: string, DB_PASS: string, API_KEY_CLIENT_AUTH: string
+let appEnv: string;
+let appPort: number;
+let logLevelConsole: string;
+let dbHost: string;
+let dbPort: number;
+let dbName: string;
+let dbUser: string;
+let dbPass: string;
+let apiKeyClientAuth: string;
 
 switch (gitBranch) {
   case 'master':
-    APP_ENV = 'production'
-    APP_PORT = 9000
-    LOG_LEVEL_CONSOLE = 'info'
-    DB_HOST = 'localhost'
-    DB_PORT = 5432
-    DB_NAME = 'energyconsumption'
-    DB_USER = 'daniel'
-    DB_PASS = 'daniel'
-    API_KEY_CLIENT_AUTH = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd'
+    appEnv = 'production';
+    appPort = 9000;
+    logLevelConsole = 'info';
+    dbHost = 'localhost';
+    dbPort = 5432;
+    dbName = 'energyconsumption';
+    dbUser = 'daniel';
+    dbPass = 'daniel';
+    apiKeyClientAuth = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd';
     break;
   case 'staging':
-    APP_ENV = 'staging'
-    APP_PORT = 9000
-    LOG_LEVEL_CONSOLE = 'debug'
-    DB_HOST = 'localhost'
-    DB_PORT = 5432
-    DB_NAME = 'energyconsumption'
-    DB_USER = 'daniel'
-    DB_PASS = 'daniel'
-    API_KEY_CLIENT_AUTH = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd'
+    appEnv = 'staging';
+    appPort = 9000;
+    logLevelConsole = 'debug';
+    dbHost = 'localhost';
+    dbPort = 5432;
+    dbName = 'energyconsumption';
+    dbUser = 'daniel';
+    dbPass = 'daniel';
+    apiKeyClientAuth = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd';
     break;
   case 'develop':
-    APP_ENV = 'develop'
-    APP_PORT = 9000
-    LOG_LEVEL_CONSOLE = 'debug'
-    DB_HOST = 'localhost'
-    DB_PORT = 5432
-    DB_NAME = 'energyconsumption'
-    DB_USER = 'daniel'
-    DB_PASS = 'daniel'
-    API_KEY_CLIENT_AUTH = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd'
+    appEnv = 'develop';
+    appPort = 9000;
+    logLevelConsole = 'debug';
+    dbHost = 'localhost';
+    dbPort = 5432;
+    dbName = 'energyconsumption';
+    dbUser = 'daniel';
+    dbPass = 'daniel';
+    apiKeyClientAuth = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd';
     break;
   default:
-    APP_ENV = 'develop'
-    APP_PORT = 9000
-    LOG_LEVEL_CONSOLE = 'debug'
-    DB_HOST = 'localhost'
-    DB_PORT = 5432
-    DB_NAME = 'energyconsumption'
-    DB_USER = 'daniel'
-    DB_PASS = 'daniel'
-    API_KEY_CLIENT_AUTH = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd'
+    appEnv = 'develop';
+    appPort = 9000;
+    logLevelConsole = 'debug';
+    dbHost = 'localhost';
+    dbPort = 5432;
+    dbName = 'energyconsumption';
+    dbUser = 'daniel';
+    dbPass = 'daniel';
+    apiKeyClientAuth = 'i4#0R2brAF9q0E$swOjtS0mBNY3lM8w3YUJQSSd';
     break;
 }
 
-export {
-  APP_ENV,
-  APP_PORT,
-  LOG_LEVEL_CONSOLE,
-  DB_HOST,
-  DB_PORT,
-  DB_NAME,
-  DB_USER,
-  DB_PASS,
-  API_KEY_CLIENT_AUTH,
-  os
-};
+const APP_ENV: string = appEnv;
+const APP_PORT: number = appPort;
+const LOG_LEVEL_CONSOLE: string = logLevelConsole;
+const DB_HOST: string = dbHost;
+const DB_PORT: number = dbPort;
+const DB_NAME: string = dbName;
+const DB_USER: string = dbUser;
+const DB_PASS: string = dbPass;
+const API_KEY_CLIENT_AUTH: string = apiKeyClientAuth;
+
+export { APP_ENV, APP_PORT, LOG_LEVEL_CONSOLE, DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS, API_KEY_CLIENT_AUTH, os };

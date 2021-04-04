@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
     {
       "name": "Launch via NPM",
       "request": "launch",
@@ -30,12 +31,12 @@
         "args": [
             "-i"
         ],
-        "preLaunchTask": "build",
+        // "preLaunchTask": "build",
         "internalConsoleOptions": "openOnSessionStart",
         "outFiles": [
             "${workspaceRoot}/api/dist/**/*"
         ],
-        "envFile": "${workspaceRoot}/api/.env"
+        // "envFile": "${workspaceRoot}/api/.env"
     }
     ]
 }
