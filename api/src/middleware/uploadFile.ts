@@ -9,10 +9,10 @@ const csvFilter = (_req: Request, file: any, cb: any) => {
 };
 
 const storage = multer.diskStorage({
-  destination: (_req: any, _file: any, cb: any) => {
+  destination: (_req: Request, _file: any, cb: any) => {
     cb(null, './reports');
   },
-  filename: (_req: any, file: any, cb: any) => {
+  filename: (_req: Request, file: any, cb: any) => {
     cb(null, `${file.originalname}-${Date.now()}`);
   },
 });

@@ -1,6 +1,6 @@
 import express, { Response } from 'express';
 // import bodyParser from 'body-parser';
-import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import routes from './routes';
 // import logger from './logger';
 import pool from './db/pool';
@@ -9,12 +9,13 @@ const app = express();
 
 routes(app);
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   }),
 );
+app.use(helmet());
 
 /* process.on('unhandledRejection', (error, promise) => {
   logger.error(` Oh Lord! We forgot to handle a promise rejection here: `, promise);

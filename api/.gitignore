@@ -126,3 +126,6 @@ build
 
 # samples
 samples/*
+
+# config file
+/src/config/index.ts

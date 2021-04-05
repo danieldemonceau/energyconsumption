@@ -50,20 +50,22 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
     } else {
       await pool.query(
         `SELECT u.id, u.date_and_time::TEXT, u.consumption, u.reading_quality
-    FROM usage u
-    WHERE 1 = 1
-    ${
-      from ?
-        `AND date_and_time >= (TO_TIMESTAMP('${from}', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
-        ''
-    }
-    ${
-      to ?
-        `WHERE date_and_time <= (TO_TIMESTAMP('${to}', 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
-        ''
-    }
-    ORDER BY date_and_time DESC 
-    ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`,
+        FROM usage u
+        WHERE 1 = 1
+        ${
+          from ?
+            `AND date_and_time >= (TO_TIMESTAMP('${from}',
+                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
+            ''
+        }
+        ${
+          to ?
+            `WHERE date_and_time <= (TO_TIMESTAMP('${to}',
+                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
+            ''
+        }
+        ORDER BY date_and_time DESC 
+        ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`,
         (error: any, results: any) => {
           if (error) {
             /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');

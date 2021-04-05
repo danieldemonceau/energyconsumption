@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { Request, Response, Application, NextFunction } from 'express';
 import pool from '../db/pool';
 import usages from './usages';
 // import logger from '../logger';
 
-const routes = (app: any): void => {
-  const getRoot = (_req: Request, res: Response, next: any) => {
+const routes = (app: Application): void => {
+  const getRoot = (_req: Request, res: Response, next: NextFunction) => {
     // logger.info(req.originalUrl);
     pool.query('SELECT NOW()', (error: any, results: any) => {
       if (error) {
