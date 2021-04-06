@@ -64,13 +64,13 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
                 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
             ''
         }
-        ORDER BY date_and_time DESC 
+        ORDER BY date_and_time DESC
         ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`,
         (error: any, results: any) => {
           if (error) {
             /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
                logger.info(error); */
-            res.status(400).json(error);
+            res.status(400).json(error.message);
           }
           // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
           res.status(200).json(results.rows);
@@ -79,7 +79,7 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
     }
   } catch (error) {
     // logger.error('API key is not valid');
-    res.status(400).json({ error: 'API key is not valid' });
+    res.status(400).json({ error: error.message });
   } finally {
     // pool.end(() => {});
   }

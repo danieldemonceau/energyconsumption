@@ -61,6 +61,15 @@ describe('GET /usages - return 1 result with limit=1', () => {
   });
 });
 
+describe('GET /usages - apikey missing', () => {
+  test(`It should respond with an http 400, and 'No API key has been provided!'`, async (done) => {
+    const response = await request(app).get('/usages');
+    expect(response.status).toBe(400);
+    expect(response.body.error).toBe('No API key has been provided!');
+    done();
+  });
+});
+
 afterAll((done) => {
   pool.end();
   done();
