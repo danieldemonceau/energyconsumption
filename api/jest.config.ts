@@ -9,7 +9,7 @@ export default {
      bail: 0, */
 
   /* The directory where Jest should store its cached dependency information
-     cacheDirectory: "C:\\Users\\danie\\AppData\\Local\\Temp\\jest", */
+     cacheDirectory: "C:\\Users\\daniel\\AppData\\Local\\Temp\\jest", */
 
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
@@ -159,8 +159,8 @@ export default {
   /* This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
      testURL: "http://localhost", */
 
-  /* Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-     timers: "real", */
+  /* Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout" */
+  timers: 'fake',
 
   /* A map from regular expressions to paths to transformers
      transform: undefined, */

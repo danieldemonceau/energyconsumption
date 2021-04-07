@@ -60,7 +60,7 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
         }
         ${
           to ?
-            `WHERE date_and_time <= (TO_TIMESTAMP('${to}',
+            `AND date_and_time <= (TO_TIMESTAMP('${to}',
                 'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
             ''
         }
