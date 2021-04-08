@@ -19,6 +19,20 @@ describe('POST /usages', () => {
   });
 });
 
+describe('POST /usages', () => {
+  test('It should fail the POST method - filenotfound', async (done: any) => {
+    const sampleShort = path.join(__dirname, '..', '..', '..', '..', 'samples', 'not_valid.csv');
+    const response = await request(app)
+      .post('/usages')
+      .type('form')
+      .field('apikey', `${API_KEY_CLIENT_AUTH}`)
+      .field('file', [fs.createReadStream(sampleShort)]);
+    expect(response.status).toBe(500);
+    expect(response.body.msg).toBe('Something broke!');
+    done();
+  });
+});
+
 afterAll((done) => {
   pool.end();
   done();

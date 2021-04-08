@@ -6,9 +6,6 @@ import { API_KEY_CLIENT_AUTH } from '../../config';
 
 const API_KEY_CLIENT_AUTH_ESCAPED = encodeUrl(API_KEY_CLIENT_AUTH);
 
-console.log('API_KEY_CLIENT_AUTH_ESCAPED');
-console.log(API_KEY_CLIENT_AUTH_ESCAPED);
-
 /* beforeAll((done) => {
      done();
    }); */

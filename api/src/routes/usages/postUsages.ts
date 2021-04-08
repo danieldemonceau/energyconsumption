@@ -10,7 +10,6 @@ interface MulterRequest extends Request {
 const postUsages = async (req: MulterRequest, res: Response, next: NextFunction): Promise<any> => {
   const apiKeyClient = String(req.body.apikey);
   isAPIKeyValid(apiKeyClient).catch((err) => {
-    console.log(err);
     // logger.error('API key is not valid');
     res.status(400).json({ error: 'API key is not valid' });
   });
@@ -24,7 +23,6 @@ const postUsages = async (req: MulterRequest, res: Response, next: NextFunction)
     })
     .catch((err: any) => {
       // logger.error(err);
-      console.log(err);
       res.status(400).json({
         msg: 'File uploaded/import failed!',
         file: req.file,
