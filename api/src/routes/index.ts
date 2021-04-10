@@ -1,6 +1,7 @@
 import { Request, Response, Application, NextFunction } from 'express';
 import pool from '../db/pool';
 import usages from './usages';
+import errorResponse from './errorResponse';
 // import logger from '../logger';
 
 const routes = (app: Application): void => {
@@ -18,6 +19,7 @@ const routes = (app: Application): void => {
   };
   app.get('/', getRoot);
   app.use('/usages', usages);
+  app.get('/*', errorResponse);
 };
 
 export default routes;

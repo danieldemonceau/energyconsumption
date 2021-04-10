@@ -11,7 +11,7 @@ const postUsages = async (req: MulterRequest, res: Response, next: NextFunction)
   const apiKeyClient = String(req.body.apikey);
   isAPIKeyValid(apiKeyClient).catch((err) => {
     // logger.error('API key is not valid');
-    res.status(400).json({ error: 'API key is not valid' });
+    res.status(400).json({ error: err.message });
   });
   csv2pg(req, next)
     .then(() => {
@@ -24,7 +24,8 @@ const postUsages = async (req: MulterRequest, res: Response, next: NextFunction)
     .catch((err: any) => {
       // logger.error(err);
       res.status(400).json({
-        msg: 'File uploaded/import failed!',
+        // msg: 'File uploaded/import failed!',
+        msg: err.message,
         file: req.file,
       });
     });
