@@ -67,7 +67,7 @@ describe('GET /usages - apikey missing', () => {
   test(`It should respond with an http 400, and 'No API key has been provided!'`, async (done) => {
     const response = await request(app).get('/usages');
     expect(response.status).toBe(400);
-    expect(response.body.error).toBe('No API key has been provided!');
+    expect(response.body.error.detail).toBe('No API key has been provided!');
     done();
   });
 });

@@ -1,24 +1,17 @@
 import { Request, Response } from 'express';
 // import logger from '../../logger';
 import isAPIKeyValid from '../middleware/isAPIKeyValid';
+import httpResponse from '../httpMessages';
 
 const errorResponse = async (req: Request, res: Response): Promise<void> => {
   const apiKeyClient = String(req.query.apikey);
   try {
     await isAPIKeyValid(apiKeyClient);
-    res.status(404).json({
-      error: {
-        type: 'ERROR',
-        title: 'API endpoint does not exist',
-        status: 404,
-        detail: `/${req.params[0]} endpoint does not exist`,
-        instance: req.originalUrl,
-      },
-    });
+    httpResponse(req, res, 'error', 404, 'API endpoint not found', `/${req.params[0]} endpoint does not exist`);
     // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
-  } catch (error) {
+  } catch (err) {
     // logger.error('API key is not valid');
-    res.status(400).json({ error: error.message });
+    httpResponse(req, res, 'error', 400, err.message, '');
   } finally {
     // pool.end(() => {});
   }

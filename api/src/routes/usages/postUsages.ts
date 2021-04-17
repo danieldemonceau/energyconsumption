@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import csv2pg from '../../middleware/csv2pg';
 // import logger from '../../logger';
 import isAPIKeyValid from '../../middleware/isAPIKeyValid';
+import httpResponse from '../../httpMessages';
 
 interface MulterRequest extends Request {
   file: any;
@@ -9,9 +10,9 @@ interface MulterRequest extends Request {
 
 const postUsages = async (req: MulterRequest, res: Response, next: NextFunction): Promise<any> => {
   const apiKeyClient = String(req.body.apikey);
-  isAPIKeyValid(apiKeyClient).catch((err) => {
+  isAPIKeyValid(apiKeyClient).catch((error) => {
     // logger.error('API key is not valid');
-    res.status(400).json({ error: err.message });
+    httpResponse(req, res, 'error', 400, 'Cannot post usages', error.message);
   });
   csv2pg(req, next)
     .then(() => {
@@ -23,11 +24,7 @@ const postUsages = async (req: MulterRequest, res: Response, next: NextFunction)
     })
     .catch((err: any) => {
       // logger.error(err);
-      res.status(400).json({
-        // msg: 'File uploaded/import failed!',
-        msg: err.message,
-        file: req.file,
-      });
+      httpResponse(req, res, 'error', 500, 'Cannot post usages', err.message);
     });
 };
 

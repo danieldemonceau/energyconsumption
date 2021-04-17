@@ -7,7 +7,7 @@ import { API_KEY_CLIENT_AUTH } from '../../config';
 
 describe('POST /usages', () => {
   test('It should response the POST method', async (done: any) => {
-    const sampleShort = path.join(__dirname, '..', '..', '..', '..', 'samples', '2005_short.csv');
+    const sampleShort = path.join(__dirname, '..', '..', '..', '..', 'samples', 'momentum_2005_short.csv');
     const response = await request(app)
       .post('/usages')
       .type('form')
@@ -28,7 +28,7 @@ describe('POST /usages', () => {
       .field('apikey', `${API_KEY_CLIENT_AUTH}`)
       .field('file', [fs.createReadStream(sampleShort)]);
     expect(response.status).toBe(500);
-    expect(response.body.msg).toBe('Something broke!');
+    expect(response.body.error.title).toBe('Cannot post usages');
     done();
   });
 });

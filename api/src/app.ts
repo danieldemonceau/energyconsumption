@@ -1,9 +1,10 @@
-import express, { Response } from 'express';
+import express, { Request, Response } from 'express';
 // import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import routes from './routes';
 // import logger from './logger';
 import pool from './db/pool';
+import httpResponse from './httpMessages';
 
 const app = express();
 
@@ -24,10 +25,10 @@ app.use(helmet());
  */
 
 // eslint-disable-next-line
-app.use((err: any, res: Response) => {
+app.use((err: any, req: Request, res: Response) => {
   if (err.stack) {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    httpResponse(req, res, 'error', 500, 'Internal Server Error', err.message);
   }
 });
 

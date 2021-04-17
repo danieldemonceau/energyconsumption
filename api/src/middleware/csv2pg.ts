@@ -11,7 +11,7 @@ interface MulterRequest extends Request {
 }
 // import logger from '../logger';
 
-const csv2pg = (req: MulterRequest, next: NextFunction): any =>
+const csv2pg = (req: MulterRequest, _next: NextFunction): any =>
   new Promise((csv2pgResolve, csv2pgReject) => {
     let { providerID } = req.body;
 
@@ -43,7 +43,7 @@ const csv2pg = (req: MulterRequest, next: NextFunction): any =>
         // for (const row of csvData) {
         const promisesArray: any = csvData.map(
           (row) =>
-            new Promise((resolve, reject) => {
+            new Promise((resolve, _reject) => {
               pool.query(
                 `INSERT INTO usage (date_and_time, consumption, reading_quality, provider_id)
                 VALUES ((TO_TIMESTAMP($1, 'DD/MM/YYYY HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE, $2, $3, ${providerID})`,
@@ -55,8 +55,8 @@ const csv2pg = (req: MulterRequest, next: NextFunction): any =>
                      INSERT INTO usage (date_and_time, consumption, reading_quality, provider_id)
                      VALUES ((TO_TIMESTAMP('${row[0]}', 'DD/MM/YYYY HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE, ${row[1]}, '${row[2]}', ${providerID})`
                                        ); */
-                    next(new Error(`Error Message: '${err.message}', line ${err.line}`));
-                    reject(new Error(`Error Message: '${err.message}', line ${err.line}`));
+                    // next(new Error(`Error Message: '${err.message}', line ${err.line}`));
+                    csv2pgReject(new Error(`Error Message: '${err.message}', line ${err.line}`));
                     // reject('not happy');
                     fs.unlinkSync(csvFile);
                   } else {

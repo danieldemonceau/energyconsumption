@@ -3,6 +3,7 @@ import validator from 'validator';
 import pool from '../../db/pool';
 // import logger from '../../logger';
 import isAPIKeyValid from '../../middleware/isAPIKeyValid';
+import httpResponse from '../../httpMessages';
 
 const getUsages = async (req: Request, res: Response): Promise<void> => {
   const apiKeyClient = String(req.query.apikey);
@@ -38,18 +39,9 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
 
     if (!(errorMessage === '')) {
       // logger.info(req.method + ' ' + req.originalUrl + ' ' + 'HTTP 400');
-      res.status(400).json({
-        error: {
-          type: 'ERROR',
-          title: errorMessage,
-          status: 400,
-          detail: errorMessage,
-          instance: req.originalUrl,
-        },
-      });
+      httpResponse(req, res, 'error', 400, 'Cannot get usages', `${errorMessage}`);
     } else {
-      await pool.query(
-        `SELECT u.id, u.date_and_time::TEXT, u.consumption, u.reading_quality
+      const query = `SELECT u.id, u.date_and_time::TEXT, u.consumption, u.reading_quality
         FROM usage u
         WHERE 1 = 1
         ${
@@ -65,21 +57,20 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
             ''
         }
         ORDER BY date_and_time DESC
-        ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`,
-        (error: any, results: any) => {
-          if (error) {
-            /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
+        ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`;
+      await pool.query(query, (err: any, results: any) => {
+        if (err) {
+          /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
                logger.info(error); */
-            res.status(400).json(error.message);
-          }
-          // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
-          res.status(200).json(results.rows);
-        },
-      );
+          httpResponse(req, res, 'error', 400, 'Cannot get usages', '');
+        }
+        // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
+        res.status(200).json(results.rows);
+      });
     }
-  } catch (error) {
+  } catch (err) {
     // logger.error('API key is not valid');
-    res.status(400).json({ error: error.message });
+    httpResponse(req, res, 'error', 400, 'Cannot get usages', err.message);
   } finally {
     // pool.end(() => {});
   }
