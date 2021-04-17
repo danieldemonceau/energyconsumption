@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS usage (
     provider_id INTEGER REFERENCES provider(id)
 );
 
-
 CREATE TRIGGER versioning_trigger
 BEFORE INSERT OR UPDATE OR DELETE ON provider
 FOR EACH ROW EXECUTE PROCEDURE versioning(
