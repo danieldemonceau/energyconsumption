@@ -45,5 +45,6 @@
   "eslint.codeAction.showDocumentation": {
     "enable": true
   },
-  "eslint.codeActionsOnSave.mode": "all"
+  "eslint.codeActionsOnSave.mode": "all",
+  "god.tsconfig": "./api\\tsconfig.json"
 }
