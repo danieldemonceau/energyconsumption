@@ -3,7 +3,6 @@ import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import routes from './routes';
 // import logger from './logger';
-import pool from './db/pool';
 import httpResponse from './httpMessages';
 
 const app = express();
@@ -14,7 +13,7 @@ app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
-  }),
+  })
 );
 app.use(helmet());
 
@@ -31,13 +30,5 @@ app.use((err: any, req: Request, res: Response) => {
     httpResponse(req, res, 'error', 500, 'Internal Server Error', err.message);
   }
 });
-
-const shutDown = () => {
-  console.log('Received kill signal, shutting down gracefully');
-  pool.end();
-};
-
-process.on('SIGTERM', shutDown);
-process.on('SIGINT', shutDown);
 
 export default app;
