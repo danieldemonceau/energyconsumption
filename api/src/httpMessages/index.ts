@@ -7,10 +7,10 @@ const httpMessage = async (
   type: string,
   status: number,
   title: string,
-  detail: string,
+  detail: string
 ): Promise<void> => {
   res.status(status).json({
-    error: {
+    response: {
       type: `${type}`,
       status: `${status}`,
       title: `${title}`,
