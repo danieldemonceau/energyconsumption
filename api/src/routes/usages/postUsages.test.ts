@@ -28,7 +28,21 @@ describe('POST /usages', () => {
       .field('apikey', `${API_KEY_CLIENT_AUTH}`)
       .field('file', [fs.createReadStream(sampleShort)]);
     expect(response.status).toBe(500);
-    expect(response.body.error.title).toBe('Cannot post usages');
+    expect(response.body.response.title).toBe('Cannot post usages');
+    done();
+  });
+});
+
+describe('POST /usages', () => {
+  test('It should fail the POST method - Please upload only csv files', async (done: any) => {
+    const sampleNotCSV = path.join(__dirname, '..', '..', '..', '..', 'samples', 'not_csv.txt');
+    const response = await request(app)
+      .post('/usages')
+      .type('form')
+      .field('apikey', `${API_KEY_CLIENT_AUTH}`)
+      .field('file', [fs.createReadStream(sampleNotCSV)]);
+    expect(response.status).toBe(500);
+    // expect(response.body.response.title).toBe('Please upload only csv files');
     done();
   });
 });

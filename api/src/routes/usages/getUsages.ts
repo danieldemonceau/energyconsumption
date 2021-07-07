@@ -18,11 +18,11 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
     const offsetIsInt = validator.isInt(String(offset), { min: 0 });
     // const fromIsDate = validator.isISO8601(String(from));
     const fromIsDate = String(from).match(
-      /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/,
+      /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/
     );
     // const toIsDate = validator.isISO8601(String(to));
     const toIsDate = String(to).match(
-      /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/,
+      /^(19|20)\d\d[/](0[1-9]|1[012])[/](0[1-9]|[12][0-9]|3[01])[ ]([01][0-9]|2[0123])[:]([0-5][0-9])$/
     );
 
     let errorMessage = '';
