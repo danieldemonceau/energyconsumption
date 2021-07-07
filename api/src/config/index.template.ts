@@ -37,17 +37,6 @@ switch (gitBranch) {
     dbPass = '';
     apiKeyClientAuth = '';
     break;
-  case 'develop':
-    appEnv = 'develop';
-    appPort = 0;
-    logLevelConsole = '';
-    dbHost = '';
-    dbPort = 0;
-    dbName = '';
-    dbUser = '';
-    dbPass = '';
-    apiKeyClientAuth = '';
-    break;
   default:
     appEnv = 'develop';
     appPort = 0;
