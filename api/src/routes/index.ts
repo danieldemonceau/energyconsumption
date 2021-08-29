@@ -13,7 +13,8 @@ const routes = (app: Application): void => {
     try {
       await isAPIKeyValid(apiKeyClient);
       const query = 'SELECT NOW()';
-      pool.query(query, (err: any, results: any) => {
+      // eslint-disable-next-line
+      pool.query(query, (err: Error, results: any) => {
         if (err) {
           // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
           httpResponse(req, res, 'error', 400, `Error with query: ${query}`, err.message);

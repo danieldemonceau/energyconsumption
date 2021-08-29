@@ -1,6 +1,7 @@
 import multer from 'multer';
 import { Request } from 'express';
 
+// eslint-disable-next-line
 const csvFilter = (_req: Request, file: any, cb: any) => {
   if (!(file.originalname.endsWith('csv') || file.mimetype.includes('csv'))) {
     cb('Please upload only csv files', false);
@@ -9,9 +10,11 @@ const csvFilter = (_req: Request, file: any, cb: any) => {
 };
 
 const storage = multer.diskStorage({
+  // eslint-disable-next-line
   destination: (_req: Request, _file: any, cb: any) => {
     cb(null, './reports');
   },
+  // eslint-disable-next-line
   filename: (_req: Request, file: any, cb: any) => {
     cb(null, `${file.originalname}-${Date.now()}`);
   },

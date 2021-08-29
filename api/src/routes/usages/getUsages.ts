@@ -45,26 +45,28 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
         FROM usage u
         WHERE 1 = 1
         ${
-          from ?
-            `AND date_and_time >= (TO_TIMESTAMP('${from}',
-                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
-            ''
+          from
+            ? `AND date_and_time >= (TO_TIMESTAMP('${from}',
+                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE`
+            : ''
         }
         ${
-          to ?
-            `AND date_and_time <= (TO_TIMESTAMP('${to}',
-                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE` :
-            ''
+          to
+            ? `AND date_and_time <= (TO_TIMESTAMP('${to}',
+                'YYYY/MM/DD HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE`
+            : ''
         }
         ORDER BY date_and_time DESC
         ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`;
-      await pool.query(query, (err: any, results: any) => {
+      // eslint-disable-next-line
+      pool.query(query, (err: Error, results: any) => {
         if (err) {
           /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 400');
                logger.info(error); */
           httpResponse(req, res, 'error', 400, 'Cannot get usages', '');
         }
-        // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
+        /* logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
+           console.log(results); */
         res.status(200).json(results.rows);
       });
     }

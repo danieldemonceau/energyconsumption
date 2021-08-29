@@ -9,9 +9,10 @@ const logger = winston.createLogger({
          format: "YYYY-MM-DD HH:mm:ss",
        }), */
     timestamp(),
+    // eslint-disable-next-line
     format.printf((info: any) => `${info.timestamp} | ${info.message}`),
     format.errors({ stack: true }),
-    format.splat(),
+    format.splat()
     // format.json(),
   ),
   /* rejectionHandlers: [
@@ -35,7 +36,8 @@ const transports = {
     level: 'verbose',
     format: combine(
       format.colorize(),
-      format.printf((info: any) => `${info.level} | ${info.timestamp} | ${info.message}`),
+      // eslint-disable-next-line
+      format.printf((info: any) => `${info.level} | ${info.timestamp} | ${info.message}`)
     ),
   }),
   http: new winston.transports.Http({

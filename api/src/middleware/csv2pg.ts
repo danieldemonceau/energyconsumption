@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Request, NextFunction } from 'express';
+import { Request } from 'express';
 import * as csv from 'fast-csv';
 import appRoot from 'app-root-path';
 import pool from '../db/pool';
@@ -7,25 +7,28 @@ import pool from '../db/pool';
 // import appRoot from 'app-root-path';
 
 interface MulterRequest extends Request {
+  // eslint-disable-next-line
   file: any;
 }
 // import logger from '../logger';
 
-const csv2pg = (req: MulterRequest, _next: NextFunction): any =>
+// eslint-disable-next-line
+const csv2pg = (req: MulterRequest): any =>
   new Promise((csv2pgResolve, csv2pgReject) => {
     let { providerID } = req.body;
 
     const csvFile = `${appRoot}/reports/${req.file.filename}`;
 
     const stream = fs.createReadStream(csvFile);
+    // eslint-disable-next-line
     const csvData: any[] = [];
 
     const csvStream = csv
       .parse()
-      .on('data', (data: any) => {
+      .on('data', (data: unknown) => {
         csvData.push(data);
       })
-      .on('error', (err: any) => {
+      .on('error', (err: Error) => {
         csv2pgReject(new Error('Cannot process uploaded csv!'));
         throw err.message;
       })
@@ -41,13 +44,15 @@ const csv2pg = (req: MulterRequest, _next: NextFunction): any =>
         csvData.shift();
 
         // for (const row of csvData) {
+        // eslint-disable-next-line
         const promisesArray: any = csvData.map(
           (row) =>
-            new Promise((resolve, _reject) => {
+            new Promise((resolve) => {
               pool.query(
                 `INSERT INTO usage (date_and_time, consumption, reading_quality, provider_id)
                 VALUES ((TO_TIMESTAMP($1, 'DD/MM/YYYY HH24:MI') AT TIME ZONE 'Australia/Melbourne')::TIMESTAMP WITH TIME ZONE, $2, $3, ${providerID})`,
                 row,
+                // eslint-disable-next-line
                 (err: any) => {
                   if (err) {
                     /*                   logger.error(
@@ -62,9 +67,9 @@ const csv2pg = (req: MulterRequest, _next: NextFunction): any =>
                   } else {
                     resolve('WORKS');
                   }
-                },
+                }
               );
-            }),
+            })
         );
 
         /* const a = await promisesArray();
