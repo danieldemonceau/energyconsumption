@@ -13,7 +13,8 @@ const error = async (req: Request, res: Response, title: string, detail: string)
       },
     });
     // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
-  } catch (err) {
+    // eslint-disable-next-line
+  } catch (err: any) {
     // logger.error('API key is not valid');
     res.status(400).json({ error: err.message });
   } finally {
