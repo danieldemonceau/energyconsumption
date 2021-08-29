@@ -23,7 +23,8 @@ const routes = (app: Application): void => {
         // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
         httpResponse(req, res, 'success', 200, `Success`, JSON.stringify(results.rows));
       });
-    } catch (err) {
+      // eslint-disable-next-line
+    } catch (err: any) {
       // logger.error('API key is not valid');
       httpResponse(req, res, 'error', 400, 'Cannot get /', err.message);
     } finally {

@@ -70,7 +70,8 @@ const getUsages = async (req: Request, res: Response): Promise<void> => {
         res.status(200).json(results.rows);
       });
     }
-  } catch (err) {
+    // eslint-disable-next-line
+  } catch (err: any) {
     // logger.error('API key is not valid');
     httpResponse(req, res, 'error', 400, 'Cannot get usages', err.message);
   } finally {
