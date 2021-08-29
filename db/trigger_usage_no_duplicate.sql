@@ -1,4 +1,4 @@
-DROP FUNCTION trigger_usage_no_duplicate() CASCADE;
+DROP FUNCTION IF EXISTS trigger_usage_no_duplicate() CASCADE;
 CREATE FUNCTION trigger_usage_no_duplicate() 
    RETURNS TRIGGER 
    LANGUAGE PLPGSQL
