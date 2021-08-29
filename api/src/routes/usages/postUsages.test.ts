@@ -14,7 +14,7 @@ describe('POST /usages', () => {
       .field('apikey', `${API_KEY_CLIENT_AUTH}`)
       .field('file', [fs.createReadStream(sampleShort)]);
     expect(response.status).toBe(200);
-    expect(response.body.msg).toBe('File uploaded/import successfully!');
+    expect(response.body.response.title).toBe('File uploaded successfully!');
   });
 });
 

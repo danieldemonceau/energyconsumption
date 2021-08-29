@@ -17,10 +17,21 @@ const postUsages = async (response: any): Promise<any> => {
   csv2pg(req)
     .then(() => {
       // logger.info(req.method + ' ' + req.originalUrl + ' → ' + 'HTTP 200');
-      res.status(200).json({
-        msg: 'File uploaded/import successfully!',
-        file,
-      });
+
+      httpResponse(
+        req,
+        res,
+        'success',
+        200,
+        'File uploaded successfully!',
+        JSON.stringify({
+          file: {
+            filename: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size,
+          },
+        })
+      );
     })
     .catch((err: Error) => {
       // logger.error(err);
