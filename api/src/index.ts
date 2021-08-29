@@ -8,8 +8,8 @@ import pool from './db/pool';
 // import logger from './logger';
 
 const options = {
-  key: fs.readFileSync(`${__dirname} /../key.pem`),
-  cert: fs.readFileSync(`${__dirname} /../cert.pem`),
+  key: fs.readFileSync(`${__dirname}/../key.pem`),
+  cert: fs.readFileSync(`${__dirname}/../cert.pem`),
 };
 
 /* app.listen(APP_PORT);
