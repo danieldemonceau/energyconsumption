@@ -2,14 +2,20 @@
   "cSpell.words": [
     "Demonceau",
     "Parens",
+    "Serializers",
     "YUJQS",
     "apikey",
+    "automock",
     "encodeurl",
     "energyconsumption",
+    "lcov",
     "linebreak",
+    "microsoft",
     "millis",
+    "notexists",
     "originalname",
-    "printf"
+    "printf",
+    "unmocked"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
