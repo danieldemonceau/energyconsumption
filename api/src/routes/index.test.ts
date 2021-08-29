@@ -13,7 +13,7 @@ const API_KEY_CLIENT_AUTH_ESCAPED = encodeUrl(API_KEY_CLIENT_AUTH);
 const IsJsonString = (str: string) => {
   try {
     JSON.parse(str);
-  } catch (e) {
+  } catch (err) {
     return false;
   }
   return true;
@@ -32,38 +32,34 @@ describe('GET /', () => {
 });
 
 describe('GET / - apikey missing', () => {
-  test(`It should respond with an http 400, and 'No API key has been provided!'`, async (done) => {
+  test(`It should respond with an http 400, and 'No API key has been provided!'`, async () => {
     const response = await request(app).get('/');
     expect(response.status).toBe(400);
     expect(response.body.response.detail).toBe('No API key has been provided!');
-    done();
   });
 });
 
 describe('GET / - apikey invalid', () => {
-  test(`It should respond with an http 400, and 'No API key has been provided!'`, async (done) => {
+  test(`It should respond with an http 400, and 'No API key has been provided!'`, async () => {
     const response = await request(app).get(`/?apikey=WrongAPIKey`);
     expect(response.status).toBe(400);
     expect(response.body.response.detail).toBe('The API key provided is not valid!');
-    done();
   });
 });
 
 describe('GET / - apikey undefined', () => {
-  test(`It should respond with an http 400, and 'No API key has been provided!'`, async (done) => {
+  test(`It should respond with an http 400, and 'No API key has been provided!'`, async () => {
     const response = await request(app).get(`/?apikey=undefined`);
     expect(response.status).toBe(400);
     expect(response.body.response.detail).toBe('No API key has been provided!');
-    done();
   });
 });
 
 describe('GET /notexists - Route does not exist', () => {
-  test(`It should respond with an http 404, and '/notexists endpoint does not exist'`, async (done) => {
+  test(`It should respond with an http 404, and '/notexists endpoint does not exist'`, async () => {
     const response = await request(app).get(`/notexists?apikey=${API_KEY_CLIENT_AUTH_ESCAPED}`);
     expect(response.status).toBe(404);
     expect(response.body.response.detail).toBe('/notexists endpoint does not exist');
-    done();
   });
 });
 
