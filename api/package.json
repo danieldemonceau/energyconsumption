@@ -44,7 +44,7 @@
     "pg": "^8.7.1",
     "request": "^2.88.2",
     "supertest": "^6.1.6",
-    "validator": "^13.6.0",
+    "validator": "^13.7.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
