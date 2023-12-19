@@ -43,7 +43,7 @@
     "nodemon": "^2.0.12",
     "pg": "^8.7.1",
     "request": "^2.88.2",
-    "supertest": "^6.1.6",
+    "supertest": "^6.2.0",
     "validator": "^13.6.0",
     "winston": "^3.3.3"
   },
