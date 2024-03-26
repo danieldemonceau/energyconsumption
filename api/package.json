@@ -35,7 +35,7 @@
     "chokidar": "^3.5.2",
     "current-git-branch": "^1.1.0",
     "encodeurl": "^1.0.2",
-    "express": "^4.17.1",
+    "express": "^4.19.2",
     "fast-csv": "^4.3.6",
     "glob-parent": "^6.0.1",
     "helmet": "^4.6.0",
