@@ -33,7 +33,7 @@
     "app-root-path": "^3.0.0",
     "braces": "^3.0.2",
     "chokidar": "^3.5.2",
-    "current-git-branch": "^1.1.0",
+    "current-git-branch": "^2.0.0",
     "encodeurl": "^1.0.2",
     "express": "^4.17.1",
     "fast-csv": "^4.3.6",
